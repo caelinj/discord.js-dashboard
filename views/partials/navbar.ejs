@@ -1,0 +1,14 @@
+<div class="navbar">
+    <a href="/"><%- pageTitle %></a>
+
+    <div class="right">
+        <% if (user) { %>
+            <a href="/me"><%- user.tag %></a>
+
+            <a href="/servers">My Servers</a>
+            <a href="/authorize/logout">Logout</a>
+        <% } else { %>
+            <a href="/authorize">Login</a>
+        <% } %>
+    </div>
+</div>

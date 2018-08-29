@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Home</title>
+    <title><%- pageTitle %></title>
 
-    <link rel="stylesheet" type="text/css" href="/milligram.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheet.css">
 </head>
 <body>
-    <% if (user) { %>
-    <p>Logged in as <%- user.tag %>, <a href="/authorize/logout">not you?</a></p>
-    <% } else { %>
-    <p>Not logged in, <a href="/authorize">click here</a> to login with Discord.</p>
-    <% } %>
+    <%- include('partials/navbar.ejs') %>
+
+    <div class="page-content">
+        <h1>Welcome</h1>
+        <p>To get started, login by clicking <em>Login</em> on the navbar, then go to the servers page and choose a server to manage.</p>
+    </div>
 </body>
 </html>
