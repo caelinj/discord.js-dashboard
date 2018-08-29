@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { clientId, clientSecret, scopes, redirectUri } = require('../config.json');
 const fetch = require('node-fetch');
+const FormData = require('form-data');
 
 router.get('/', (req, res) => {
     const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join('%20')}`;
@@ -12,20 +13,20 @@ router.get('/callback', (req, res) => {
     const accessCode = req.query.code;
     if (!accessCode) throw new Error('No access code returned frm Discord');
 
+    const data = new FormData();
+    data.append('client_id', clientId);
+    data.append('client_secret', clientSecret);
+    data.append('grant_type', 'authorization_code');
+    data.append('redirect_uri', redirectUri);
+    data.append('scope', scopes.join(' '));
+    data.append('code', accessCode);
+
     fetch('https://discordapp.com/api/oauth2/token', {
         method: 'POST',
-        body: {
-            client_id: clientId,
-            client_secret: clientSecret,
-            grant_type: 'authorization_code',
-            redirect_uri: redirectUri,
-            scope: scopes.join('%20'),
-            code: accessCode,
-        },
+        body: data
     })
     .then(res => res.json())
     .then(response => {
-        console.log(response)
         fetch('https://discordapp.com/api/users/@me', {
             method: 'GET',
             headers: {
