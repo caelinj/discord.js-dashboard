@@ -35,8 +35,10 @@ router.get('/callback', (req, res) => {
         })
         .then(res2 => res2.json())
         .then(userResponse => {
+            userResponse.tag = `${userResponse.username}#${userResponse.discriminator}`;
+            userResponse.avatarURL = userResponse.avatar ? `https://cdn.discordapp.com/avatars/${userResponse.id}/${userResponse.avatar}.png?size=1024` : null;
+
             req.session.user = userResponse;
-            console.log(userResponse);
             res.redirect('/');
         });
     });
