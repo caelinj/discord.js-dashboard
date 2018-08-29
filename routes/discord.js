@@ -4,12 +4,21 @@ const { clientId, clientSecret, scopes, redirectUri } = require('../config.json'
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 
+const forceAuth = (req, res, next) => {
+    if (!req.session.user) return res.redirect('/authorize')
+    else return next();
+}
+
 router.get('/', (req, res) => {
+    if (req.session.user) return res.redirect('/');
+
     const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join('%20')}`;
     res.redirect(authorizeUrl);
 });
 
 router.get('/callback', (req, res) => {
+    if (req.session.user) return res.redirect('/');
+    
     const accessCode = req.query.code;
     if (!accessCode) throw new Error('No access code returned frm Discord');
 
@@ -42,6 +51,10 @@ router.get('/callback', (req, res) => {
             res.redirect('/');
         });
     });
+});
+
+router.get('/logout', forceAuth, (req, res) => {
+    req.session.destroy();
 });
 
 module.exports = router;
