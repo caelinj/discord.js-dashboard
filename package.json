@@ -20,6 +20,8 @@
   "homepage": "https://github.com/caelinj/discord.js-dashboard#readme",
   "dependencies": {
     "ejs": "^2.6.1",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "node-fetch": "^2.2.0"
   }
 }
