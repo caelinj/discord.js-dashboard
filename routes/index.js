@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
-    res.send(`Hello world!`);
+    res.render('index', { user: req.session.user || null });
 });
 
 module.exports = router;

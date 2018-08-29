@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <% if (user) { %>
+    <p>Logged in as <%- user.username %>#<%- user.discriminator %>, <a href="/authorize/logout">not you?</a></p>
+    <% } else { %>
+    <p>Not logged in, <a href="/authorize">click here</a> to login with Discord.</p>
+    <% } %>
+</body>
+</html>

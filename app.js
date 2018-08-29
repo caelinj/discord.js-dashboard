@@ -8,18 +8,9 @@ const session = require('express-session');
 
 app.set('view engine', 'ejs');
 app.use(session({
-    genid: (req) => {
-        return genuuid();
-    },
-    secret: 'keyboard cat',
+    secret: '48738924783748273742398747238',
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-        path: '/',
-        httpOnly: true,
-        secure: false,
-        maxAge: 604800000,
-    },
+    saveUninitialized: false,
     expires: 604800000,
 }));
 require('./router')(app);

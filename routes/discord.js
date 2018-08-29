@@ -12,7 +12,7 @@ router.get('/callback', (req, res) => {
     const accessCode = req.query.code;
     if (!accessCode) throw new Error('No access code returned frm Discord');
 
-    fetch({
+    fetch('https://discordapp.com/api/oauth2/token', {
         method: 'POST',
         body: {
             client_id: clientId,
@@ -25,7 +25,19 @@ router.get('/callback', (req, res) => {
     })
     .then(res => res.json())
     .then(response => {
-        req.session.DiscordAuth = response;
+        console.log(response)
+        fetch('https://discordapp.com/api/users/@me', {
+            method: 'GET',
+            headers: {
+                authorization: `${response.token_type} ${response.access_token}`
+            },
+        })
+        .then(res2 => res2.json())
+        .then(userResponse => {
+            req.session.user = userResponse;
+            console.log(userResponse);
+            res.redirect('/');
+        });
     });
 });
 
