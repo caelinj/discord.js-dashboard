@@ -3,7 +3,7 @@ const router = require('express').Router();
 const { clientId, clientSecret, scopes, redirectUri } = require('../config.json');
 
 router.get('/', (req, res) => {
-    const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scopes=${scopes.join('%20')}`;
+    const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join('%20')}`;
     res.redirect(authorizeUrl);
 });
 
